@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        DEV_SERVER  = "deploy@DEV_IP"
-        TEST_SERVER = "deploy@TEST_IP"
-        PROD_SERVER = "deploy@PROD_IP"
+        DEV_SERVER  = "deploy@54.242.32.214"
+        TEST_SERVER = "deploy@35.175.189.199"
+        PROD_SERVER = "deploy@3.95.195.209"
         WAR_NAME    = "app.war"
         TOMCAT_DIR  = "/var/lib/tomcat9/webapps"
     }
