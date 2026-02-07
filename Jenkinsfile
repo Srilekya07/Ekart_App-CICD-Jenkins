@@ -13,7 +13,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/ORG/REPO.git'
+                git url: 'https://github.com/Srilekya07/Ekart_App-CICD-Jenkins.git', branch: 'main'
             }
         }
 
@@ -52,10 +52,11 @@ pipeline {
     }
 
     post {
-    success {
-        echo "Deployment successful"
-    }
-    failure {
-        echo "Deployment failed. Check console logs."
+        success {
+            echo "Deployment completed successfully"
+        }
+        failure {
+            echo "Deployment failed. Check console output."
+        }
     }
 }
