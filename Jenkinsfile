@@ -52,25 +52,10 @@ pipeline {
     }
 
     post {
-        failure {
-            emailext(
-                subject: "❌ Jenkins Pipeline Failed: ${env.JOB_NAME}",
-                body: """
-                Job: ${env.JOB_NAME}
-                Build: ${env.BUILD_NUMBER}
-                Stage: ${env.STAGE_NAME}
-                Check Jenkins console logs.
-                """,
-                to: "yourmail@example.com"
-            )
-        }
-
-        success {
-            emailext(
-                subject: "✅ Deployment Successful",
-                body: "Application deployed successfully to all servers.",
-                to: "yourmail@example.com"
-            )
-        }
+    success {
+        echo "Deployment successful"
+    }
+    failure {
+        echo "Deployment failed. Check console logs."
     }
 }
