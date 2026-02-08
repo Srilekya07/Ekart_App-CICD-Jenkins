@@ -2,11 +2,11 @@ pipeline {
     agent any
 
     environment {
-        DEV_SERVER  = "deploy@54.242.32.214"
-        TEST_SERVER = "deploy@35.175.189.199"
-        PROD_SERVER = "deploy@3.95.195.209"
+        DEV_SERVER  = "deploy@3.91.83.50"
+        TEST_SERVER = "deploy@34.228.75.209"
+        PROD_SERVER = "deploy@3.92.56.250"
         WAR_NAME    = "app.war"
-        TOMCAT_DIR  = "/var/lib/tomcat9/webapps"
+        TOMCAT_DIR  = "/var/lib/tomcat10/webapps"
     }
 
     stages {
@@ -19,7 +19,10 @@ pipeline {
 
         stage('Build WAR') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                sh '''
+                mvn clean package -DskipTests
+                cp target/*.war target/app.war
+                '''
             }
         }
 
@@ -27,7 +30,7 @@ pipeline {
             steps {
                 sh """
                 scp target/${WAR_NAME} ${DEV_SERVER}:${TOMCAT_DIR}
-                ssh ${DEV_SERVER} 'sudo systemctl restart tomcat9'
+                ssh ${DEV_SERVER} 'sudo systemctl restart tomcat10'
                 """
             }
         }
@@ -36,7 +39,7 @@ pipeline {
             steps {
                 sh """
                 scp target/${WAR_NAME} ${TEST_SERVER}:${TOMCAT_DIR}
-                ssh ${TEST_SERVER} 'sudo systemctl restart tomcat9'
+                ssh ${TEST_SERVER} 'sudo systemctl restart tomcat10'
                 """
             }
         }
@@ -45,7 +48,7 @@ pipeline {
             steps {
                 sh """
                 scp target/${WAR_NAME} ${PROD_SERVER}:${TOMCAT_DIR}
-                ssh ${PROD_SERVER} 'sudo systemctl restart tomcat9'
+                ssh ${PROD_SERVER} 'sudo systemctl restart tomcat10'
                 """
             }
         }
